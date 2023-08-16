@@ -5,7 +5,7 @@ from typing import (
     Tuple,
 )
 
-ATOMIC_TYPES = Tuple[atoms.Atom] = (
+ATOMIC_TYPES: Tuple[atoms.Atom] = (
     atoms.Bytes,
     atoms.Float32,
     atoms.Float64,

@@ -3,16 +3,16 @@ from pydantic import (
     field_validator,
 )
 import numpy as np
+import dask.array as da
 from typing import (
     List,
     Protocol,
     Any,
-    runtime_checkable
+    Union,
+    runtime_checkable,
 )
-from atoms import Atom
 import config
 from shared import (
-    ATOMIC_TYPES,
     NUMPY_TO_ATOMS,
 )
 
@@ -38,7 +38,7 @@ class Array:
 
 @dataclasses.dataclass(config=config.DATACLASS)
 class Grid:
-    value: np.ndarray
+    value: Union[np.ndarray, da.Array]
 
     @property
     def shape(self):
@@ -49,9 +49,9 @@ class Grid:
         return NUMPY_TO_ATOMS[self.value.dtype]
 
     @field_validator('value', mode='before')
-    def check_grid_dtype(self, value: np.ndarray) -> np.ndarray:
+    def check_grid_dtype(cls, value: np.ndarray) -> np.ndarray:
         """Check that grid is of an atomic type"""
-        if not isinstance(value, np.ndarray):
+        if not isinstance(value, np.ndarray) and not isinstance(value, da.Array):
             raise ValueError('Grid must be a numpy array')
         if value.dtype not in NUMPY_TO_ATOMS.keys():
             raise ValueError(
@@ -65,7 +65,7 @@ class Sequence:
     value: List[Structure]
 
     @field_validator('value', mode='before')
-    def check_sequence(self, value):
+    def check_sequence(cls, value):
         length: int = 0
 
         for i, struct in enumerate(value):
@@ -80,4 +80,5 @@ class Sequence:
 
 
 if __name__ == '__main__':
-    Grid(np.array([1, 2, 3]))
+    g = Grid(np.array([1, 2, 3]))
+    print(g)
