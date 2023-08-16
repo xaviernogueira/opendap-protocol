@@ -9,7 +9,9 @@ def test_ubytes() -> None:
     """Test that the ubyte class only allows valid instances"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.Bytes(np.ubyte(0)).value == 0
+    b = atoms.Bytes(np.ubyte(0))
+    assert b.value == 0
+    assert b.string == 'B'
     assert atoms.Bytes(np.ubyte(255)).value == 255
     assert atoms.Bytes(np.ubyte(1.9)).value == 1
 
@@ -34,7 +36,9 @@ def test_int16() -> None:
     """Test Int16 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.Int16(np.int16(0)).value == 0
+    i = atoms.Int16(np.int16(0))
+    assert i.value == 0
+    assert i.string == '>i4'
     assert atoms.Int16(np.int16(-32768)).value == -32768
     assert atoms.Int16(np.int16(32767)).value == 32767
 
@@ -59,7 +63,9 @@ def test_uint16() -> None:
     """Test UInt16 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.UInt16(np.uint16(0)).value == 0
+    i = atoms.UInt16(np.uint16(0))
+    assert i.value == 0
+    assert i.string == '>u4'
     assert atoms.UInt16(np.uint16(65535)).value == 65535
 
     try:
@@ -83,7 +89,9 @@ def test_int32() -> None:
     """Test Int32 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.Int32(np.int32(0)).value == 0
+    i = atoms.Int32(np.int32(0))
+    assert i.value == 0
+    assert i.string == '>i4'
     assert atoms.Int32(np.int32(-2147483648)).value == -2147483648
     assert atoms.Int32(np.int32(2147483647)).value == 2147483647
 
@@ -108,7 +116,9 @@ def test_uint32() -> None:
     """Test UInt32 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.UInt32(np.uint32(0)).value == 0
+    i = atoms.UInt32(np.uint32(0))
+    assert i.value == 0
+    assert i.string == '>u4'
     assert atoms.UInt32(np.uint32(4294967295)).value == 4294967295
 
     try:
@@ -132,7 +142,9 @@ def test_float32() -> None:
     """Test Float32 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.Float32(np.float32(0)).value == 0
+    f = atoms.Float32(np.float32(0))
+    assert f.value == 0
+    assert f.string == '>f4'
     assert atoms.Float32(np.float32(100.0)).value == 100.0
 
     try:
@@ -156,7 +168,9 @@ def test_float64() -> None:
     """Test Float64 atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.Float64(np.float64(0.0)).value == 0.0
+    f = atoms.Float64(np.float64(0.0))
+    assert f.value == 0.0
+    assert f.string == '>f8'
     assert atoms.Float64(np.float64(-100.0)).value == -100.0
 
     try:
@@ -175,7 +189,9 @@ def test_string() -> None:
     """Test String atomic type"""
 
     # Test that the ubyte class only allows valid instances
-    assert atoms.String('test').value == 'test'
+    s = atoms.String('test')
+    assert s.value == 'test'
+    assert s.string == 'S'
 
     # try a non-ascii string
     non_ascii = '§'
@@ -196,7 +212,9 @@ def test_url() -> None:
 
     # Test that the ubyte class only allows valid instances
     valid_url = r'http://www.cwi.nl:80/%7Eguido/Python.html'
-    assert atoms.URL(valid_url).value == valid_url
+    url = atoms.URL(valid_url)
+    assert url.value == valid_url
+    assert url.string == 'S'
 
     # try invalid string url
     try:

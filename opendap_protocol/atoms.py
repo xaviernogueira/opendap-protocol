@@ -40,11 +40,11 @@ class AtomStrings(Enum):
 class Atom:
     @property
     def string(self):
-        return AtomStrings(self.__class__.__name__.upper()).value
+        return getattr(AtomStrings, self.__class__.__name__.upper()).value
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class Bytes:
+class Bytes(Atom):
     value: np.ubyte
 
     # TODO: Do we want to do conversions? Or maybe just be strict.
@@ -60,37 +60,37 @@ class Bytes:
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class Float32:
+class Float32(Atom):
     value: np.float32
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class Float64:
+class Float64(Atom):
     value: np.float64
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class Int16:
+class Int16(Atom):
     value: np.int16
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class Int32:
+class Int32(Atom):
     value: np.int32
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class UInt16:
+class UInt16(Atom):
     value: np.uint16
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class UInt32:
+class UInt32(Atom):
     value: np.uint32
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class String:
+class String(Atom):
     value: np.str_
 
     @field_validator('value', mode='before')
@@ -99,7 +99,7 @@ class String:
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
-class URL:
+class URL(Atom):
     value: np.str_
 
     @field_validator('value', mode='before')
