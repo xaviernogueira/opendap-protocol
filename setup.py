@@ -35,6 +35,7 @@ requirements = [
     'numpy',
     'dask',
     'toolz',
+    'pydantic',
 ]
 setup_requirements = [
     'setuptools_scm',
@@ -77,7 +78,7 @@ setup(
     scripts=[],
     license="BSD-3-Clause license",
     long_description=open('README.md').read() + '\n\n' +
-                     open('HISTORY.rst').read(),
+    open('HISTORY.rst').read(),
     include_package_data=True,
     zip_safe=False,
     test_suite='test',
@@ -89,4 +90,4 @@ setup(
     setup_requires=setup_requirements,
     tests_require=test_requirements,
     extras_require=extras,
-    )
+)
