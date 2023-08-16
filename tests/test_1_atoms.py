@@ -229,9 +229,3 @@ def test_url() -> None:
         assert False
     except ValueError:
         assert True
-
-
-test_uint32()
-
-# test_ubytes()
-# test_url()
