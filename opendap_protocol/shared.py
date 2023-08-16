@@ -5,11 +5,6 @@ from typing import (
     Tuple,
 )
 
-DATACLASS_CONFIG_DICT: Dict[str, bool] = {
-    'validate_assignment': True,
-    'arbitrary_types_allowed': True,
-}
-
 ATOMIC_TYPES = Tuple[atoms.Atom] = (
     atoms.Bytes,
     atoms.Float32,

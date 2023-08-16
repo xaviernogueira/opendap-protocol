@@ -3,7 +3,7 @@ from typing import (
     Union,
     List,
 )
-from shared import DATACLASS_CONFIG_DICT as CONFIG_DICT
+import config
 from constructors import Structure
 from atoms import (
     Atom,
@@ -15,11 +15,11 @@ AttributeTypes: Union[
 ]
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Attribute:
     value: AttributeTypes
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class AttributeStructure:
     values: List[Attribute]

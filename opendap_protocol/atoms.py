@@ -10,7 +10,7 @@ from typing import (
     Dict,
     Tuple,
 )
-from shared import DATACLASS_CONFIG_DICT as CONFIG_DICT
+import config
 
 
 def validate_ascii(v: Union[str, np.str_]) -> np.str_:
@@ -39,42 +39,42 @@ class Atom:
         return getattr(AtomStrings, self.__class__.__name__.upper()).value
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Bytes(Atom):
     value: np.ubyte
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Float32(Atom):
     value: np.float32
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Float64(Atom):
     value: np.float64
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Int16(Atom):
     value: np.int16
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class Int32(Atom):
     value: np.int32
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class UInt16(Atom):
     value: np.uint16
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class UInt32(Atom):
     value: np.uint32
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class String(Atom):
     value: np.str_
 
@@ -83,7 +83,7 @@ class String(Atom):
         return validate_ascii(v)
 
 
-@dataclasses.dataclass(config=CONFIG_DICT)
+@dataclasses.dataclass(config=config.DATACLASS)
 class URL(Atom):
     value: np.str_
 
