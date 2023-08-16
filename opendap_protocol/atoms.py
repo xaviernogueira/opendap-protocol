@@ -4,10 +4,12 @@ from pydantic import (
 )
 import urllib
 import numpy as np
+from enum import Enum
 from typing import (
     Dict,
     Union,
 )
+
 
 CONFIG_DICT: Dict[str, bool] = {
     'validate_assignment': True,
@@ -16,14 +18,45 @@ CONFIG_DICT: Dict[str, bool] = {
 
 
 def validate_ascii(v: Union[str, np.str_]) -> np.str_:
+    if not isinstance(v, np.str_) and not isinstance(v, str):
+        raise ValueError(f'Invalid type: {type(v)}')
     if not all(ord(c) < 128 for c in v):
         raise ValueError(f'Invalid ASCII: {v}')
     return np.str_(v)
 
 
+class AtomStrings(Enum):
+    BYTES = 'B'
+    FLOAT32 = '>f4'
+    FLOAT64 = '>f8'
+    INT16 = '>i4'
+    INT32 = '>i4'
+    UINT16 = '>u4'
+    UINT32 = '>u4'
+    STRING = 'S'
+    URL = 'S'
+
+
+class Atom:
+    @property
+    def string(self):
+        return AtomStrings(self.__class__.__name__.upper()).value
+
+
 @dataclasses.dataclass(config=CONFIG_DICT)
 class Bytes:
-    value: bytes
+    value: np.ubyte
+
+    # TODO: Do we want to do conversions? Or maybe just be strict.
+    # @field_validator('value', mode='before')
+    # def validate(cls, v: Union[int, np.ubyte]) -> np.ubyte:
+    #    if isinstance(v, int):
+    #        if v < 0 or v > 255:
+    #            raise ValueError(f'Invalid byte: {v}')
+    #        v = np.ubyte(v)
+    #    elif not isinstance(v, np.ubyte):
+    #        raise ValueError(f'Invalid type: {type(v)}')
+    #    return v
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
@@ -54,10 +87,6 @@ class UInt16:
 @dataclasses.dataclass(config=CONFIG_DICT)
 class UInt32:
     value: np.uint32
-
-    @field_validator('value', mode='before')
-    def validate(cls, v):
-        return validate_ascii(v)
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
