@@ -6,15 +6,11 @@ import urllib
 import numpy as np
 from enum import Enum
 from typing import (
-    Dict,
     Union,
+    Dict,
+    Tuple,
 )
-
-
-CONFIG_DICT: Dict[str, bool] = {
-    'validate_assignment': True,
-    'arbitrary_types_allowed': True,
-}
+from shared import DATACLASS_CONFIG_DICT as CONFIG_DICT
 
 
 def validate_ascii(v: Union[str, np.str_]) -> np.str_:
@@ -46,17 +42,6 @@ class Atom:
 @dataclasses.dataclass(config=CONFIG_DICT)
 class Bytes(Atom):
     value: np.ubyte
-
-    # TODO: Do we want to do conversions? Or maybe just be strict.
-    # @field_validator('value', mode='before')
-    # def validate(cls, v: Union[int, np.ubyte]) -> np.ubyte:
-    #    if isinstance(v, int):
-    #        if v < 0 or v > 255:
-    #            raise ValueError(f'Invalid byte: {v}')
-    #        v = np.ubyte(v)
-    #    elif not isinstance(v, np.ubyte):
-    #        raise ValueError(f'Invalid type: {type(v)}')
-    #    return v
 
 
 @dataclasses.dataclass(config=CONFIG_DICT)
